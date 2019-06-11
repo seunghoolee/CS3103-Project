@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<link href="/static/style.css" type="text/css" rel="stylesheet"/>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <title>Login!</title>
+      <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <div class "background: lightyellow">
+      </div>
+    <div id="app">
+      <div v-show="!authenticated">
+      <center><h1>Login</h1></center>
+      <center><h2>By Seung Lee & Spencer Gould</h2></center>
+      <center><form style="max-width: 330px; padding: 15px; margin: 5 auto;" @submit.prevent="login()"><center>
+          <center><input size="15" v-model="username" type="username" placeholder="username" class="form-control"required autofocus/><center><br/>
+          <input size="15" v-model="password" type="password" placeholder="password" class="form-control"required/><br/>
+          <button v-on:click= "login(username, password)" id="loginButton" class="nav">Login</button>
+      </form>
+    </div>
+    <div v-show="authenticated">
+      <center><h1>Welcome to your To Do List</h1></center>
+      <center><h2>By Seung Hoo Lee & Spencer Gould</h2></center>
+      <ul>
+        <center><button v-on:click= "logout()" class="nav" value="Log Out">Logout</button></center>
+      </ul>
+      <br/>
+      <form action="">
+    		<fieldset>
+    		<legend><h3>To Do List</h3></legend>
+        <p>
+      		<h4>Add Item to List</h4>
+          <div id="feedback">
+            <form style="max-width: 330px; padding: 15px; margin: 5 auto;" @submit.prevent="addToDoitem()">
+              <input size= "20" v-model="toDoItemInput" type= "toDoItemInput" placeholder="Add Item" class="form-control"required/>
+              <button v-on:click= "addToDoitem(toDoItemInput);getToDoItemOneUser()" value="Add Item" class="nav" type="button">Add Item</button>
+            </form>
+          </div>
+        </p>
+        <br/><br/>
+        </fieldset>
+          <div>
+            <!--To Do List Space causing me suicidal tendencies-->
+            <legend><h3>To Do Lists</h3></legend>
+            <div id="feedback" class="inline">
+              <button v-on:click= "getToDoItemOneUser()" value="getToDoItemOneUser" class="nav" type="button">Show Only Mine</button>
+              <button v-on:click= "getToDoItem()" value="getToDoItem" class="nav" type="button">Show All</button>
+              <div id= "feedback" v-for="u in user">
+                <div v-for="item in u">
+                  <ul style="list-style-type: none;">
+                    <li style="font-size:36px">{{item.userID}} : {{item.toDoItem}} <button v-show="cloak" class="nav" v-on:click="deleteOneItem(item.toDoListID);getToDoItemOneUser()">Delete</button></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+    </div><!--authenticated end div-->
+  </div>
+    <script src="/static/main2.js"></script>
+  </body>
+</html>

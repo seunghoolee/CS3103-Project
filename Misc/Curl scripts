@@ -1,0 +1,67 @@
+ALL THE CURL COMMANDS
+***********************
+
+-------------------------
+Gets all registered users 						(GOOD)
+-------------------------
+	curl http://info3103.cs.unb.ca:51327/users
+
+------------------------------------------------------
+Gets all users lists as well as userID and toDoListID			(GOOD)
+------------------------------------------------------
+	curl http://info3103.cs.unb.ca:51327/users/toDoList
+
+-----------------------------------------------
+Adds a user called "Your dad" to table of users 			(FINE)
+-----------------------------------------------
+	curl -i -X POST -H "Content-Type: application/json" -d '{"userName":"Your dad"}' -b cookie-jar http://info3103.cs.unb.ca:51327/users
+
+-----------------------------------------
+Gets User who has the userID of 1 (Fred) 				(GOOD)
+-----------------------------------------
+	curl http://info3103.cs.unb.ca:51327/users/1
+
+---------------------------------
+Deletes User 1 from user tables		(Deletes Fred from users table)
+---------------------------------
+	curl -X DELETE -b cookie-jar http://info3103.cs.unb.ca:51327/users/1
+	
+-----------------------------
+Gets every users to do Items						(GOOD)
+-----------------------------
+	curl http://info3103.cs.unb.ca:51327/users/toDoList
+
+------------------------			
+Gets user 3's toDoList							(GOOD)
+------------------------
+	curl http://info3103.cs.unb.ca:51327/users/1/toDoList
+
+----------------------------------------------
+Gets specific user's item from specific user 				("Watch best Anime")
+----------------------------------------------
+	curl http://info3103.cs.unb.ca:51327/users/1/toDoList/4
+
+---------------------------------------------
+Adds a to do item of "pay taxes" for user 1			(Adds "Pay taxes" to Fred/user1)
+---------------------------------------------
+	curl -i -X POST -H "Content-Type: application/json" -d '{"toDoItem":"Pay taxes"}' -b cookie-jar http://info3103.cs.unb.ca:51327/users/1/toDoList/69
+
+-----------------------------------------------------------------
+Deletes a specific item from user 1's list with toDoListID of 4	(Delete's Watch the best anime)
+------------------------------------------------------------------
+	curl -X DELETE -b cookie-jar http://info3103.cs.unb.ca:51327/users/1/toDoList/4
+
+-----------------------------------------------------------------
+Posts a new username and logs in using LDAP				
+------------------------------------------------------------------
+	curl -i -H "Content-Type: application/json" -X POST -d '{"username": "Casper", "password": "password"}' -b cookie-jar http://info3103.cs.unb.ca:51327/signin
+
+-----------------------------------------------------------------
+Gets the status of the current session					
+------------------------------------------------------------------
+curl -i -H "Content-Type: application/json" -X GET -b cookie-jar http://info3103.cs.unb.ca:51327/signin
+
+-----------------------------------------------------------------
+Deletes the Current session and its cookie (Logging out)		
+------------------------------------------------------------------
+curl -i -H "Content-Type: application/json" -X DELETE -b cookie-jar http://info3103.cs.unb.ca:51327/signin

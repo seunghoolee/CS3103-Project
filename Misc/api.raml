@@ -1,0 +1,204 @@
+#%RAML 1.0
+title: ToDoList
+version: v1
+baseUri: http://info3103.cs/unb/ca/slee4/project
+mediaType: application/json
+securitySchemes:
+  basic:
+    description: Basic Authentication
+    type: Basic Authentication
+    describedBy:
+      headers:
+        Authorization:
+          description:
+          type: string
+      responses:
+        401:
+          description: Not authorized
+types:
+  userID:
+    pattern: {userID, password}
+
+#post is create
+#put is update
+#get is a request to retrieve resources representation/information only
+# This is for SignIn
+/Signin:
+    get:
+      description: Gets the status of the Session
+      responses:
+        200:
+          body:
+            application/json:
+              example: {
+                    "success": true,
+                    "status": 200
+              }
+        403:
+          description: No session active
+          body:
+            application/json:
+              example: {
+                    "failure": true,
+                    "status": 403
+              }
+    #for login
+    post:
+      description: Creates a new session using username and password. LDAP
+      responses:
+        200:
+          body:
+            application/json:
+              example: {
+                    "success": true,
+                    "status": 200
+              }
+        403:
+          description: LDAPException
+          body:
+            application/json:
+              example: {
+                    "failure": true,
+                    "status": 403
+              }
+    #for logout
+    delete:
+      description: Deletes the current session from LDAP
+      responses:
+        200:
+          body:
+            application/json:
+              example: {
+                    "success": true,
+                    "status": 200
+              }
+#This is for ALL USERS
+/Users:
+  get:
+    description: List of users
+    responses:
+      200:
+        body:
+          application/json:
+            example: {
+                      "users":
+                        {
+                            "userID": 4,
+                            "username": "Jake Paul"
+                        },
+                      "success": true,
+                      "status": 200
+            }
+      404:
+        description: List is empty
+        body:
+          application/json:
+            type: userID
+
+  post:
+    description: Create a new user
+    responses:
+      201:
+        body:
+          application/json:
+            example: {
+                        "uri": "http://info3103.cs.unb.ca:51327/users"
+                     }
+
+  #This is for a singular USER
+  /{User}:
+    get:
+      description: gets user Information such as userID
+      responses:
+        200:
+          body:
+            application/json:
+              example: {
+                          "User Information":{
+                            "userID": 1,
+                            "userName": "Fred"
+                          }
+                        }
+        404:
+          description: User does not exist
+          body:
+            application/json:
+
+    delete:
+      description: Deletes a user if they are authenticated
+      responses:
+        201:
+          body:
+            application/json:
+              example: {
+                          "uri": "http://info3103.cs.unb.ca:51327/users/<int:userID>"
+                       }
+
+  /toDoList:
+    #allows other user to see the list (w/o verfication)
+    description: To do list of all users
+    get:
+      description: Retrieve the to do list all users
+      body:
+      responses:
+        200:
+          body:
+            application/json:
+              example: {
+                    "This user's list": [
+                      {
+                        "toDoItem": "Clean",
+                        "toDoListID": 1,
+                        "userID": 1
+                      },
+                      {
+                        "toDoItem": "watch the best anime",
+                        "toDoListID": 4,
+                        "userID": 1
+                      }
+                    ]
+                  }
+
+        404:
+          description: List does not exist so return empty array
+            example:{
+                "This user's list":[]
+              }
+
+    #thing to do in the To Do List
+    /{toDoListID}:
+        get:
+          description: Get the thing to do in a specific user's List
+          body:
+          responses:
+            200:
+              body:
+                application/json:
+                      example: {
+                          "User's specific Item": {
+                            "toDoItem": "Clean",
+                            "toDoListID": 1,
+                            "userID": 1
+                          }
+                        }
+
+        post:
+          description: Create a new thing to do
+
+          body:
+          responses:
+            200:
+              body:
+                application/json:
+                  example: {
+                    "uri": "http://info3103.cs.unb.ca:51327/users/<int:userID>/toDoList/<int:toDoListID>"
+                  }
+
+        delete:
+          description: Deleting a thing to do item
+
+          responses:
+            204:
+              description: Nothing to return because delete was successful
+            401:
+              description: Nothing to return because can't delete something that doesn't exist

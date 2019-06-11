@@ -1,0 +1,73 @@
+.nav {
+    background-color: #4CAD69;
+    border: black;
+    color: white;
+    padding: 10px 20px;
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+}
+ul{
+  list-style-type: none;
+}
+
+li a{
+  display: block;
+}
+/*I want the button and text to spawn on the same line*/
+inline {
+   display:inline-block;
+   margin-right:5px;
+}
+
+body{
+  padding: 25px;/*how many pixels from the top left*/
+}
+
+h1{
+  color: #0099ee;
+  margin: 5px;/*spacing between headers*/
+}
+
+h2{
+  color: #C8ADAD;
+  margin: 5px;/*spacing between headers*/
+}
+
+h3{/*To Do List*/
+  color: #4CAD69;
+  font-size: 200%;
+}
+
+h4{/*To Do List*/
+  font-size: 125%;
+}
+
+
+
+h1{/*Welcome to your To Do List*/
+  font-family: Georgia, serif;
+  font-size: 250%;
+  text-shadow: 2px 2px 5px #556677;
+  padding-bottom: 15px;
+}
+
+h2{/*By Seung Hoo Lee and Spencer Gould*/
+  font-family: "Comic Sans", sans-serif;
+  font-size: 75%;
+  text-transform: uppercase;
+  letter-spacing: 0.2em
+}
+
+#myDIV {
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+p2 {
+    word-spacing: 30px;
+}
